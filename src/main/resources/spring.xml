@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--开启注解 annotation-->
+    <context:annotation-config/>
+    <!--指定注解的位置,在哪一个包下面-->
+    <context:component-scan base-package="spring"/>
+    <!-- 开启AspectJ支持-->
+    <aop:aspectj-autoproxy />
+
+    <!--@Component("") 对所有的类通用-->
+    <!--@Resource(name="") 在有相关依赖时,在setter方法上是用 -->
+    <!--@Repository("") 用于所有Dao层的类-->
+    <!--@Service("") 用于所有Service层的类-->
+    <!--@Controller() 用于controller层-->
+
+
+    <!--HelloSpring 的 bean,   prototype 代表多例,    默认是单例的-->
+     <!--autowire 自动装配 将字段user对象自动装配上,自动属性注入-->
+    <bean name="helloSpring" class="spring.model.HelloSpring" scope="prototype" autowire="byName">
+         <!--spring 的属性注入-->
+        <property name="name" value="Tom"/>
+    </bean>
+
+     <!--集合注入测试使用-->
+    <bean name="group1" class="spring.model.Group">
+        <property name="id" value="1"/>
+        <property name="name" value="java"/>
+    </bean>
+    <bean name="group2" class="spring.model.Group">
+        <property name="id" value="2"/>
+        <property name="name" value="c++"/>
+    </bean>
+    <bean name="group3" class="spring.model.Group">
+        <property name="id" value="3"/>
+        <property name="name" value="python"/>
+    </bean>
+
+     <!--集合注入-->
+    <bean name="user" class="spring.model.User">
+        <property name="names">
+            <array>
+                <value>小明</value>
+                <value>小红</value>
+                <value>小华</value>
+            </array>
+        </property>
+        <property name="groupList">
+            <list>
+                <ref bean="group1"/>
+                <ref bean="group2"/>
+                <ref bean="group3"/>
+            </list>
+        </property>
+        <property name="sets">
+            <set>
+                <ref bean="group1"/>
+                <ref bean="group2"/>
+            </set>
+        </property>
+        <property name="hashMap">
+            <map key-type="java.lang.String" value-type="spring.model.Group">
+                <entry key="java" value-ref="group1"/>
+                <entry key="c++" value-ref="group2"/>
+                <entry key="python" value-ref="group3"/>
+            </map>
+        </property>
+    </bean>
+
+     <!--修改dao层的代码,可以不用修改service和action的代码,-->
+     <!--修改代码后只需要配置当前文件即可,下面是改过后的配置-->
+    <!--
+    <bean name="groupDao" class="spring.dao.GroupDao"/>
+    <bean name="groupHibernateDao" class="spring.dao.GroupHibernateDao"/>
+     &lt;!&ndash;创建 service bean&ndash;&gt;
+    <bean name="groupService" class="spring.service.GroupService">
+         &lt;!&ndash;只需要在这里将ref的值修改成新的bean就可以了&ndash;&gt;
+        <property name="groupDao"  ref="groupProxyDao"/>
+    </bean>
+     &lt;!&ndash;创建 action bean&ndash;&gt;
+    <bean name="groupAction" class="spring.action.GroupAction">
+        <property name="groupService" ref="groupService"/>
+        <property name="group" ref="group1"/>
+    </bean>
+    -->
+
+    <!-- 动态代理的类的bean , 还需要在service里面@Resource引入-->
+    <!--<bean name="logDynamicProxy" class="spring.proxy.LogProxy" factory-method="getInstance">-->
+        <!--<constructor-arg ref="groupDao"/>-->
+    <!--</bean>-->
+
+
+
+
+
+
+
+</beans>
