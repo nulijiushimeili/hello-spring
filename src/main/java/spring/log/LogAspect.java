@@ -22,7 +22,7 @@ public class LogAspect {
      */
     // 前置通知
     @Before("execution (* spring.dao.*.add*(..)) || execution (* spring.dao.*.update*(..))")
-    public void methodStrat(JoinPoint point){
+    public void methodStart(JoinPoint point){
         // 通过连接点获取方法的名字
         MyLogger.getLogger().info(point.getSignature().getName());
         MyLogger.getLogger().info(" 这是一个前置通知");

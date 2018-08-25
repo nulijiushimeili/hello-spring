@@ -1,0 +1,9 @@
+09:09:56.371 INFO  spring.log.LogAspect 27 methodStart - add
+09:09:56.378 INFO  spring.log.LogAspect 28 methodStart -  这是一个前置通知
+09:09:56.379 INFO  spring.log.LogAspect 34 methodStop -  这是一个后置通知
+09:09:56.380 INFO  spring.log.LogAspect 27 methodStart - add
+09:09:56.380 INFO  spring.log.LogAspect 28 methodStart -  这是一个前置通知
+09:09:56.380 INFO  spring.log.LogAspect 34 methodStop -  这是一个后置通知
+09:09:56.381 INFO  spring.log.LogAspect 41 methodAround -  执行了环绕通知
+09:09:56.382 INFO  spring.log.LogAspect 43 methodAround -  执行了环绕通知
+09:09:56.382 INFO  spring.log.LogAspect 52 methodReturn - 当方法正常执行完成返回的时候,你会看到这个输出
